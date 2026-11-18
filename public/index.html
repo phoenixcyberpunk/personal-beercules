@@ -36,7 +36,8 @@ label.ck input{width:18px;height:18px;accent-color:var(--red)}
 :focus-visible{outline:2px solid var(--red);outline-offset:2px}
 .cols{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);gap:clamp(18px,3vw,36px)}
 .kick{font-size:14px;color:var(--mute);margin:0 0 6px}
-.hd,.row>summary{display:grid;grid-template-columns:3.2em minmax(0,1fr) 4.6em 4em;gap:10px;align-items:baseline}
+.hd,.row>summary{display:grid;grid-template-columns:3.2em minmax(0,1fr) 7.6em 4em;gap:10px;align-items:baseline}
+.pr small{color:var(--mute);font-size:14px}
 .hd{font-size:13px;color:var(--mute);border-bottom:1px solid var(--rule);padding:6px 0}
 .hd span:nth-child(n+3),.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
 .row{border-bottom:1px dotted var(--hair)}
@@ -63,7 +64,7 @@ aside h2{font-family:'IM Fell English SC',serif;font-weight:400;letter-spacing:.
 .small{font-size:14px;color:var(--mute);margin:8px 0 0}
 footer{margin-top:28px;border-top:3px double var(--rule);padding-top:10px;font-size:14px;color:var(--mute);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 @media(max-width:760px){.cols{grid-template-columns:minmax(0,1fr)}.bar{flex-direction:column;align-items:stretch}.tabs a{flex:1;justify-content:center}.ctl{flex-direction:column;align-items:stretch;gap:8px}.ctl input[type=search],.ctl select{width:100%;flex:none}.ctl .ck{min-height:40px}}
-@media(max-width:520px){.hd,.row>summary{grid-template-columns:2.4em minmax(0,1fr) 3.6em 3.2em;gap:6px}.body{padding-left:0}.top span:nth-child(3){display:none}}
+@media(max-width:520px){.hd,.row>summary{grid-template-columns:2.4em minmax(0,1fr) 4.2em 3.2em;gap:6px}.pr small{display:block;font-size:13px}.pr .dot{display:none}.body{padding-left:0}.top span:nth-child(3){display:none}}
 </style>
 </head>
 <body>
@@ -87,7 +88,7 @@ footer{margin-top:28px;border-top:3px double var(--rule);padding-top:10px;font-s
 <div class="cols">
 <main>
 <p class="kick sc">Mest alkohol per krona</p>
-<div class="hd sc"><span>N:r</span><span>Etablissemang</span><span>kr/40 cl</span><span>APK</span></div>
+<div class="hd sc"><span>N:r</span><span>Etablissemang</span><span>Pris</span><span>APK</span></div>
 <div id="list"></div>
 </main>
 <aside>
@@ -106,7 +107,8 @@ const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&g
 const fmt=(x,d)=>x==null?'–':x.toLocaleString('sv-SE',{minimumFractionDigits:d,maximumFractionDigits:d});
 const today=new Date();
 document.getElementById('today').textContent=today.toLocaleDateString('sv-SE',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).replace(/^./,c=>c.toUpperCase());
-const prep=rows=>rows.map(({bar,area,price_kr:price,size_cl:size,abv,beer,source:src,source_url:url,checked:date,address:addr,note})=>{
+const sv=s=>s==null?s:String(s).replace(/\(can\)/,'(burk)').replace(/\(bottle\)/,'(flaska)').replace(/^Not named \((burk|flaska)\)$/,'Okänt märke ($1)').replace(/^Not named$/,'Okänt märke');
+const prep=rows=>rows.map(({bar,area,price_kr:price,size_cl:size,abv,beer:b0,source:src,source_url:url,checked:date,address:addr,note})=>{const beer=sv(b0);
   const per40=price!=null&&size?Math.round(price/size*40):null;
   const apk=price!=null&&size&&abv?Math.round(size*10*abv/price*100)/100:null;
   let st,cls='';
@@ -119,7 +121,7 @@ const prep=rows=>rows.map(({bar,area,price_kr:price,size_cl:size,abv,beer,source
 const C={malmo:{name:'Malmö',rows:[]},goteborg:{name:'Göteborg',rows:[]}};
 const $=id=>document.getElementById(id);
 let city='malmo';
-const by=(a,b)=>(b.apk??-1)-(a.apk??-1)||(a.per40??999)-(b.per40??999)||a.bar.localeCompare(b.bar,'sv');
+const by=(a,b)=>(b.apk??-1)-(a.apk??-1)||(a.price??999)-(b.price??999)||a.bar.localeCompare(b.bar,'sv');
 function setCity(){
   const h=location.hash.slice(1);city=C[h]?h:'malmo';
   for(const k in C)$('t-'+k).setAttribute('aria-current',k===city?'page':'false');
@@ -129,8 +131,8 @@ function setCity(){
 }
 function render(){
   const rows=C[city].rows,q=$('q').value.trim().toLowerCase(),ar=$('area').value,u60=$('u60').checked,fr=$('fresh').checked;
-  const vis=rows.filter(r=>(!ar||r.area===ar)&&(!u60||(r.per40!=null&&r.per40<=60))&&(!fr||r.date)&&(!q||[r.bar,r.beer,r.addr,r.area].join(' ').toLowerCase().includes(q))).sort(by);
-  $('list').innerHTML=vis.length?vis.map((r,i)=>`<details class="row"><summary><span class="rn">${ROMAN(i+1)}.</span><span><span class="nm">${esc(r.bar)}</span><span class="meta">${esc(r.area)}${r.beer?' · '+esc(r.beer):''}</span></span><span class="n">${r.per40??'–'}</span><span class="n apk">${fmt(r.apk,2)}</span></summary><dl class="body">
+  const vis=rows.filter(r=>(!ar||r.area===ar)&&(!u60||(r.price!=null&&r.price<=60))&&(!fr||r.date)&&(!q||[r.bar,r.beer,r.addr,r.area].join(' ').toLowerCase().includes(q))).sort(by);
+  $('list').innerHTML=vis.length?vis.map((r,i)=>`<details class="row"><summary><span class="rn">${ROMAN(i+1)}.</span><span><span class="nm">${esc(r.bar)}</span><span class="meta">${esc(r.area)}${r.beer?' · '+esc(r.beer):''}</span></span><span class="n pr">${r.price!=null?r.price+' kr':'–'}${r.price!=null&&r.size?'<span class="dot"> · </span><small>'+r.size+' cl</small>':''}</span><span class="n apk">${fmt(r.apk,2)}</span></summary><dl class="body">
 <dt>Pris</dt><dd>${r.price!=null?r.price+' kr'+(r.size?' för '+r.size+' cl':''):'Okänt'}</dd>
 <dt>Starkhet</dt><dd>${r.abv?fmt(r.abv*100,1)+' %':'Okänd'}</dd>
 <dt>Adress</dt><dd>${esc(r.addr)||'Okänd'}</dd>
