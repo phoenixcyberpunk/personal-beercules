@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jakten på den Store Starke</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* VOICE: a dry, old-fashioned Swedish broadsheet with a wink
+   IDEA: an 1890s newspaper price column, printed for two cities
+   PICTURE: the ranked list itself, set like a printed table with dotted leaders
+   COLOUR and TYPE: newsprint and ink (night: ink plate), one crimson for numerals; IM Fell + Old Standard TT
+   LAYOUT: full-width masthead, list column with a narrow sidebar of notices; stacks on phones */
+:root{color-scheme:light dark;--bg:light-dark(#efeadf,#141311);--paper:light-dark(#f6f2e8,#1b1a17);--ink:light-dark(#1b1814,#e8e2d4);--mute:light-dark(#5e574c,#a39b8b);--rule:light-dark(#2a251f,#cfc7b6);--hair:light-dark(#b9b09f,#4a463e);--red:light-dark(#9b1c1c,#e48c84)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'Old Standard TT',Georgia,serif;overflow-x:clip}
+a{color:inherit;text-decoration-color:var(--hair);text-underline-offset:3px}
+.sheet{max-width:1120px;margin:0 auto;padding:clamp(16px,3vw,40px) max(4vw,14px) 48px}
+.sc{font-family:'IM Fell English SC',Georgia,serif;letter-spacing:.04em}
+.fell{font-family:'IM Fell English',Georgia,serif}
+.dbl{border-top:3px double var(--rule);margin:6px 0}
+.top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:14px;color:var(--mute)}
+h1{font-family:'IM Fell English',Georgia,serif;font-weight:400;text-align:center;font-size:clamp(32px,6.4vw,64px);line-height:1.05;margin:14px 0 4px;text-wrap:balance}
+.sub{text-align:center;font-style:italic;font-size:clamp(17px,2.2vw,21px);color:var(--mute);margin:0 0 10px}
+.bar{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin:16px 0 20px}
+.tabs{display:flex;border:1px solid var(--rule)}
+.tabs a{padding:10px 18px;text-decoration:none;font-size:16px;min-height:44px;display:flex;align-items:center}
+.tabs a[aria-current=page]{background:var(--ink);color:var(--bg)}
+.ctl{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;flex:1}
+input[type=search],select{font:16px 'Old Standard TT',Georgia,serif;color:var(--ink);background:var(--paper);border:1px solid var(--hair);border-radius:0;padding:9px 10px;min-height:44px}
+input[type=search]{flex:1 1 180px}
+label.ck{display:flex;gap:8px;align-items:center;font-size:15px;min-height:44px;cursor:pointer}
+label.ck input{width:18px;height:18px;accent-color:var(--red)}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.cols{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);gap:clamp(18px,3vw,36px)}
+.kick{font-size:14px;color:var(--mute);margin:0 0 6px}
+.hd,.row>summary{display:grid;grid-template-columns:3.2em minmax(0,1fr) 4.6em 4em;gap:10px;align-items:baseline}
+.hd{font-size:13px;color:var(--mute);border-bottom:1px solid var(--rule);padding:6px 0}
+.hd span:nth-child(n+3),.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.row{border-bottom:1px dotted var(--hair)}
+.row>summary{list-style:none;cursor:pointer;padding:10px 0;min-height:44px}
+.row>summary::-webkit-details-marker{display:none}
+.row>summary:hover .nm{text-decoration:underline;text-decoration-color:var(--hair)}
+.rn{font-family:'IM Fell English',serif;color:var(--red);font-size:17px}
+.nm{font-size:17px}.meta{display:block;font-style:italic;color:var(--mute);font-size:14px}
+.apk{font-weight:700}
+.body{padding:2px 0 14px 3.2em;font-size:15px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 14px}
+.body dt{color:var(--mute)}.body dd{margin:0}
+.st{display:inline-block;border:1px solid currentColor;padding:0 6px;font-size:13px;line-height:1.6}
+.st.ok{color:var(--ink)}.st.old{color:var(--red)}
+.empty{padding:24px 0;font-style:italic;color:var(--mute)}
+aside section{border-top:3px double var(--rule);padding:10px 0 16px}
+aside section:first-child{border-top:1px solid var(--rule)}
+aside h2{font-family:'IM Fell English SC',serif;font-weight:400;letter-spacing:.04em;font-size:16px;margin:0 0 6px;color:var(--mute)}
+.dist button{all:unset;display:flex;justify-content:space-between;gap:8px;width:100%;padding:6px 0;cursor:pointer;min-height:32px;align-items:baseline}
+.dist button::after{content:none}
+.dist .lead{flex:1;border-bottom:1px dotted var(--hair);transform:translateY(-4px)}
+.dist button[aria-pressed=true]{color:var(--red)}
+.dist button:focus-visible{outline:2px solid var(--red)}
+.note{font-family:'IM Fell English',serif;font-style:italic;font-size:17px;line-height:1.45;margin:0}
+.small{font-size:14px;color:var(--mute);margin:8px 0 0}
+footer{margin-top:28px;border-top:3px double var(--rule);padding-top:10px;font-size:14px;color:var(--mute);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media(max-width:760px){.cols{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:520px){.hd,.row>summary{grid-template-columns:2.4em minmax(0,1fr) 3.6em 3.2em;gap:6px}.body{padding-left:0}.top span:nth-child(3){display:none}}
+</style>
+</head>
+<body>
+<div class="sheet">
+<div class="top sc"><span id="vol">Årg. I · N:r 2</span><span id="today"></span><span>Pris: en stor stark</span></div>
+<div class="dbl"></div>
+<h1>”Jakten på den Store Starke”</h1>
+<p class="sub fell">en Ellenkvällen-tale</p>
+<div class="dbl"></div>
+
+<div class="bar">
+<nav class="tabs sc" aria-label="Stad"><a href="#malmo" id="t-malmo">Malmö</a><a href="#goteborg" id="t-goteborg">Göteborg</a></nav>
+<div class="ctl">
+<input type="search" id="q" placeholder="Sök krog, öl eller gata" aria-label="Sök">
+<select id="area" aria-label="Stadsdel"><option value="">Alla stadsdelar</option></select>
+<label class="ck"><input type="checkbox" id="u60"> Högst 60 kr</label>
+<label class="ck"><input type="checkbox" id="fresh"> Bara daterade priser</label>
+</div>
+</div>
+
+<div class="cols">
+<main>
+<p class="kick sc">Mest alkohol per krona</p>
+<div class="hd sc"><span>N:r</span><span>Etablissemang</span><span>kr/40 cl</span><span>APK</span></div>
+<div id="list"></div>
+</main>
+<aside>
+<section><h2>Per stadsdel</h2><div class="dist" id="dist"></div></section>
+<section><h2>Till läsekretsen</h2><p class="note" id="notice"></p><p class="small" id="ed"></p></section>
+<section><h2>Efterlyses</h2><p class="note" id="wanted"></p></section>
+</aside>
+</div>
+<footer><span>APK = milliliter ren alkohol per krona. Starkhet efter märkets vanliga värde.</span><span>Beercules Logistik</span></footer>
+</div>
+<script>
+{
+let D={malmo:[],goteborg:[]};let SNAP='';
+const ROMAN=n=>{const m=[[1000,'M'],[900,'CM'],[500,'D'],[400,'CD'],[100,'C'],[90,'XC'],[50,'L'],[40,'XL'],[10,'X'],[9,'IX'],[5,'V'],[4,'IV'],[1,'I']];let s='';for(const[v,r]of m)while(n>=v){s+=r;n-=v}return s};
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=(x,d)=>x==null?'–':x.toLocaleString('sv-SE',{minimumFractionDigits:d,maximumFractionDigits:d});
+const today=new Date();
+document.getElementById('today').textContent=today.toLocaleDateString('sv-SE',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).replace(/^./,c=>c.toUpperCase());
+const prep=rows=>rows.map(({bar,area,price_kr:price,size_cl:size,abv,beer,source:src,source_url:url,checked:date,address:addr,note})=>{
+  const per40=price!=null&&size?Math.round(price/size*40):null;
+  const apk=price!=null&&size&&abv?Math.round(size*10*abv/price*100)/100:null;
+  let st,cls='';
+  if(price==null){st='Pris saknas';cls='old'}
+  else if(!date)st='Datum okänt';
+  else if((today-new Date(date))/864e5>183){st='Inaktuellt';cls='old'}
+  else{st='Färskt';cls='ok'}
+  return{bar,area,price,size,abv,beer,src,url,date,addr,note,per40,apk,st,cls};
+});
+const C={malmo:{name:'Malmö',rows:[]},goteborg:{name:'Göteborg',rows:[]}};
+const $=id=>document.getElementById(id);
+let city='malmo';
+const by=(a,b)=>(b.apk??-1)-(a.apk??-1)||(a.per40??999)-(b.per40??999)||a.bar.localeCompare(b.bar,'sv');
+function setCity(){
+  const h=location.hash.slice(1);city=C[h]?h:'malmo';
+  for(const k in C)$('t-'+k).setAttribute('aria-current',k===city?'page':'false');
+  const areas=[...new Set(C[city].rows.map(r=>r.area))].sort((a,b)=>a.localeCompare(b,'sv'));
+  $('area').innerHTML='<option value="">Alla stadsdelar</option>'+areas.map(a=>`<option>${esc(a)}</option>`).join('');
+  render();
+}
+function render(){
+  const rows=C[city].rows,q=$('q').value.trim().toLowerCase(),ar=$('area').value,u60=$('u60').checked,fr=$('fresh').checked;
+  const vis=rows.filter(r=>(!ar||r.area===ar)&&(!u60||(r.per40!=null&&r.per40<=60))&&(!fr||r.date)&&(!q||[r.bar,r.beer,r.addr,r.area].join(' ').toLowerCase().includes(q))).sort(by);
+  $('list').innerHTML=vis.length?vis.map((r,i)=>`<details class="row"><summary><span class="rn">${ROMAN(i+1)}.</span><span><span class="nm">${esc(r.bar)}</span><span class="meta">${esc(r.area)}${r.beer?' · '+esc(r.beer):''}</span></span><span class="n">${r.per40??'–'}</span><span class="n apk">${fmt(r.apk,2)}</span></summary><dl class="body">
+<dt>Pris</dt><dd>${r.price!=null?r.price+' kr'+(r.size?' för '+r.size+' cl':''):'Okänt'}</dd>
+<dt>Starkhet</dt><dd>${r.abv?fmt(r.abv*100,1)+' %':'Okänd'}</dd>
+<dt>Adress</dt><dd>${esc(r.addr)||'Okänd'}</dd>
+<dt>Källa</dt><dd>${r.url?`<a href="${esc(r.url)}">${esc(r.src)}</a>`:'Ingen ännu'}</dd>
+<dt>Kontrollerat</dt><dd>${r.date??'Inget datum'} <span class="st ${r.cls}">${r.st}</span></dd>
+${r.note?`<dt>Anteckning</dt><dd>${esc(r.note)}</dd>`:''}</dl></details>`).join(''):'<p class="empty">Inga krogar motsvara sökningen. Lossa på villkoren.</p>';
+  const cnt={};rows.forEach(r=>cnt[r.area]=(cnt[r.area]||0)+1);
+  $('dist').innerHTML=Object.entries(cnt).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0],'sv')).map(([a,n])=>`<button type="button" data-a="${esc(a)}" aria-pressed="${a===ar}"><span>${esc(a)}</span><span class="lead"></span><span class="n">${n}</span></button>`).join('');
+  const priced=rows.filter(r=>r.price!=null),nodate=priced.filter(r=>!r.date).length,fresh=rows.filter(r=>r.st==='Färskt').length;
+  $('notice').textContent=nodate===priced.length?`Härvarande ${priced.length} priser bära intet datum. Bekräfta vid baren innan firandet tager sin början.`:`Av ${priced.length} priser äro ${fresh} färska och ${nodate} sakna datum. Bekräfta vid baren innan firandet tager sin början.`;
+  $('ed').textContent=`Upplagan uppdaterad ${SNAP}.`;
+  const miss=rows.filter(r=>r.price==null).map(r=>r.bar),dis=rows.filter(r=>r.note&&/\d+ kr/.test(r.note)&&!/Over 60|agree/i.test(r.note)).map(r=>r.bar);
+  const list=a=>a.length<2?a.join(''):a.slice(0,-1).join(', ')+' och '+a[a.length-1];
+  $('wanted').textContent=miss.length?`Uppgifter om priset å ${list(miss.slice(0,5))}${miss.length>5?' med flera':''}.`:dis.length?`Vittnen till det sanna priset å ${list(dis.slice(0,4))}. Källorna äro oense.`:'Intet att efterlysa för närvarande.';
+}
+$('dist').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$('area').value=$('area').value===b.dataset.a?'':b.dataset.a;render()});
+['q','area','u60','fresh'].forEach(id=>$(id).addEventListener('input',render));
+addEventListener('hashchange',setCity);
+$('list').innerHTML='<p class="empty">Sätter typerna…</p>';
+fetch('data/prices.json',{cache:'no-cache'}).then(r=>{if(!r.ok)throw 0;return r.json()}).then(j=>{
+  C.malmo.rows=prep(j.cities.malmo||[]);C.goteborg.rows=prep(j.cities.goteborg||[]);
+  SNAP=new Date(j.updated).toLocaleDateString('sv-SE',{day:'numeric',month:'long',year:'numeric'});setCity();
+}).catch(()=>{$('list').innerHTML='<p class="empty">Prislistan kunde ej hämtas. Försök åter om en stund.</p>'});
+}
+</script>
+</body>
+</html>
