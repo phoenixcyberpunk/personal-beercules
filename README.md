@@ -6,7 +6,8 @@ En Ellenkvällen-tale. Ellen's personal fun project (not Ellenial): the cheapest
 
 - `public/index.html` – the whole site, static, no server, no login. Reads `data/prices.json` on load.
 - `public/data/prices.json` – the price list. This file is the database.
-- `wrangler.jsonc` – tells Cloudflare to serve only the `public` folder.
+- `src/index.js` – small Worker: serves `public/` and keeps the visit counter (`POST /api/hit`, totals at `/stats.json`).
+- `wrangler.jsonc` – serves only the `public` folder; D1 database `beercules-stats` for the counter (created by Cloudflare on first deploy).
 - Hosting: Cloudflare Workers (static assets), connected to this private repo. Every push to `main` deploys the site.
 - Domain: beercules.se (bought separately, not through Vercel).
 
@@ -21,6 +22,10 @@ En Ellenkvällen-tale. Ellen's personal fun project (not Ellenial): the cheapest
 
 - Automatic: a weekly Claude scheduled run checks sources and commits changes to `public/data/prices.json`.
 - Ellen: price tips via a GitHub issue form (to be added after she has seen it).
+
+## Visit counter
+
+One count per phone per day: the page remembers in the browser that it already counted today, then posts to `/api/hit`. The database holds only `day` and `visits`, nothing about the visitor. `/stats.json` shows the totals (last 90 days). The morning run copies them to Ellen's Ongoing board.
 
 ## Fields in prices.json
 
@@ -39,6 +44,7 @@ Live at https://beercules.se (Ellen checked it on her phone). DNSSEC re-enabled:
 
 ## Decisions log
 
+- 2026-11-18 18:55: price column shows the real price and size (Ellen: kr/40 cl was misleading); visit counter decided as option A: counted at Cloudflare, copied to the Ongoing board once a day by the morning run, Claude gets no Cloudflare access.
 - 2026-11-18 17:36: site live at beercules.se; DNSSEC DS record added at Loopia.
 - 2026-11-18 15:09: Ellen bought beercules.se at Loopia (MFA on), moved nameservers to Cloudflare (jerry/sasha), DNSSEC off for the move. Cloudflare DNS: no-mail records (MX ".", SPF -all, DMARC reject). AI crawler settings chosen by Ellen in Cloudflare.
 - 2026-11-18 15:13: Ellen created this private repo; GitHub passkey already on. Cloudflare's GitHub app limited to this repo only.

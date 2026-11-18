@@ -1,8 +1,15 @@
 {
   "name": "beercules",
+  "main": "src/index.js",
   "compatibility_date": "2026-11-01",
   "assets": {
     "directory": "./public",
-    "not_found_handling": "404-page"
-  }
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*", "/stats.json"]
+  },
+  // Visit counter. No database_id on purpose: Cloudflare creates the database on first deploy.
+  "d1_databases": [
+    { "binding": "DB", "database_name": "beercules-stats" }
+  ]
 }

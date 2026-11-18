@@ -152,6 +152,7 @@ $('dist').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)
 ['q','area','u60','fresh'].forEach(id=>$(id).addEventListener('input',render));
 addEventListener('hashchange',setCity);
 $('list').innerHTML='<p class="empty">Sätter typerna…</p>';
+try{const k='bc-counted',d=new Date().toLocaleDateString('sv-SE',{timeZone:'Europe/Stockholm'});if(localStorage.getItem(k)!==d){fetch('/api/hit',{method:'POST',keepalive:true}).then(r=>{if(r.ok)localStorage.setItem(k,d)}).catch(()=>{})}}catch(e){}
 fetch('data/prices.json',{cache:'no-cache'}).then(r=>{if(!r.ok)throw 0;return r.json()}).then(j=>{
   C.malmo.rows=prep(j.cities.malmo||[]);C.goteborg.rows=prep(j.cities.goteborg||[]);
   SNAP=new Date(j.updated).toLocaleDateString('sv-SE',{day:'numeric',month:'long',year:'numeric'});setCity();
