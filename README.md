@@ -25,7 +25,7 @@ En Ellenkvällen-tale. Ellen's personal fun project (not Ellenial): the cheapest
 
 ## Visit counter
 
-One count per phone per day: the page remembers in the browser that it already counted today, then posts to `/api/hit`. The database holds only `day` and `visits`, nothing about the visitor. `/stats.json` shows the totals (last 90 days). The morning run copies them to Ellen's Ongoing board.
+One count per phone per day: the page remembers in the browser that it already counted today, then posts to `/api/hit`. The database holds only `day` and `visits`, nothing about the visitor. `/stats.json` shows the totals (last 90 days). Ellen's Ongoing board reads them live from the D1 database `beercules-stats` (id 704cfaea-4454-4ef8-b9b4-5c1205bc219c) through the Cloudflare Developer Platform connector, SELECT only, in its own "Personal · visits per day" panel (not the Ellenial table).
 
 ## Fields in prices.json
 
@@ -44,7 +44,8 @@ Live at https://beercules.se (Ellen checked it on her phone). DNSSEC re-enabled:
 
 ## Decisions log
 
-- 2026-11-18 18:55: price column shows the real price and size (Ellen: kr/40 cl was misleading); visit counter decided as option A: counted at Cloudflare, copied to the Ongoing board once a day by the morning run, Claude gets no Cloudflare access.
+- 2026-11-18 18:55: price column shows the real price and size (Ellen: kr/40 cl was misleading); visit counter counted at Cloudflare (D1).
+- 2026-11-18 20:45: Ellen chose live numbers on the Ongoing board through Cloudflare: connected the Cloudflare Developer Platform connector (Claude now has access to the Cloudflare account). Separate Personal panel, not in the Ellenial table. No daily copy task.
 - 2026-11-18 17:36: site live at beercules.se; DNSSEC DS record added at Loopia.
 - 2026-11-18 15:09: Ellen bought beercules.se at Loopia (MFA on), moved nameservers to Cloudflare (jerry/sasha), DNSSEC off for the move. Cloudflare DNS: no-mail records (MX ".", SPF -all, DMARC reject). AI crawler settings chosen by Ellen in Cloudflare.
 - 2026-11-18 15:13: Ellen created this private repo; GitHub passkey already on. Cloudflare's GitHub app limited to this repo only.
