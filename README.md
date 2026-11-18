@@ -26,13 +26,12 @@ En Ellenkvällen-tale. Ellen's personal fun project (not Ellenial): the cheapest
 
 `bar, area, price_kr, size_cl, abv (0.052 = 5.2 %), beer, source, source_url, source_type, checked (YYYY-MM-DD or null), address, note`
 
-## Status (2026-11-18, 15:23)
+## Status (2026-11-18, 17:36)
 
-Building. Deployed on Cloudflare Workers; custom domains beercules.se and www.beercules.se added. Zone still **Pending** (nameservers just moved from Loopia), so HTTPS fails with "unsupported protocol" until Cloudflare shows Active and the Universal certificate is issued. workers.dev and Preview URLs are turned off.
+Live at https://beercules.se (Ellen checked it on her phone). DNSSEC re-enabled: DS record (key tag 2371, algorithm 13, digest type 2) entered at Loopia; waiting for Cloudflare to confirm.
 
 ### Open
-- Wait for zone Active, then check https://beercules.se (Malmö no. I = Asian House, Göteborg no. I = Silverkällan).
-- Turn DNSSEC back on: Cloudflare DNS → Settings → Enable DNSSEC, then DS record at Loopia (check Loopia allows DS with external nameservers).
+- Check Cloudflare's DNSSEC status turns Active.
 - Price-tip form (GitHub issue form): mock-up first.
 - Weekly Claude price run: show Ellen what it checks before turning it on.
 - Row notes are still in English inside a Swedish page; translate?
@@ -40,6 +39,7 @@ Building. Deployed on Cloudflare Workers; custom domains beercules.se and www.be
 
 ## Decisions log
 
+- 2026-11-18 17:36: site live at beercules.se; DNSSEC DS record added at Loopia.
 - 2026-11-18 15:09: Ellen bought beercules.se at Loopia (MFA on), moved nameservers to Cloudflare (jerry/sasha), DNSSEC off for the move. Cloudflare DNS: no-mail records (MX ".", SPF -all, DMARC reject). AI crawler settings chosen by Ellen in Cloudflare.
 - 2026-11-18 15:13: Ellen created this private repo; GitHub passkey already on. Cloudflare's GitHub app limited to this repo only.
 - 2026-11-18 14:55: name beercules.se chosen (Ellen); "Beercules Logistik" used as the paper's sign-off.
