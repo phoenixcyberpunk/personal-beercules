@@ -8,8 +8,8 @@
     "not_found_handling": "404-page",
     "run_worker_first": ["/api/*", "/stats.json"]
   },
-  // Visit counter. No database_id on purpose: Cloudflare creates the database on first deploy.
+  // Visit counter (created by Cloudflare on the first deploy, 18 Nov 2026).
   "d1_databases": [
-    { "binding": "DB", "database_name": "beercules-stats" }
+    { "binding": "DB", "database_name": "beercules-stats", "database_id": "704cfaea-4454-4ef8-b9b4-5c1205bc219c" }
   ]
 }
