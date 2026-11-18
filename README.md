@@ -4,9 +4,10 @@ En Ellenkvällen-tale. Ellen's personal fun project (not Ellenial): the cheapest
 
 ## How it works
 
-- `index.html` – the whole site, static, no server, no login. Reads `data/prices.json` on load.
-- `data/prices.json` – the price list. This file is the database.
-- Hosting: Cloudflare Pages, connected to this private repo. Every push to `main` rebuilds the site.
+- `public/index.html` – the whole site, static, no server, no login. Reads `public/data/prices.json` on load.
+- `public/data/prices.json` – the price list. This file is the database.
+- `wrangler.jsonc` – tells Cloudflare to serve only the `public` folder.
+- Hosting: Cloudflare Workers (static assets), connected to this private repo. Every push to `main` deploys the site.
 - Domain: beercules.se (bought separately, not through Vercel).
 
 ## Price rules (Ellen, 2026-11-16)
@@ -18,7 +19,7 @@ En Ellenkvällen-tale. Ellen's personal fun project (not Ellenial): the cheapest
 
 ## Updating prices
 
-- Automatic: a weekly Claude scheduled run checks sources and commits changes to `data/prices.json`.
+- Automatic: a weekly Claude scheduled run checks sources and commits changes to `public/data/prices.json`.
 - Ellen: price tips via a GitHub issue form (to be added after she has seen it).
 
 ## Fields in prices.json
@@ -27,4 +28,4 @@ En Ellenkvällen-tale. Ellen's personal fun project (not Ellenial): the cheapest
 
 ## Decisions log
 
-- 2026-11-18: moved from a Claude Sheet + claude.ai page to its own site. No Supabase (free limit full, and must stay apart from Phoenix and Ellenial). Data as a JSON file in this repo. Cloudflare Pages over a second Vercel account: separate company, no hosting access needed by Claude. Domain beercules.se.
+- 2026-11-18: moved from a Claude Sheet + claude.ai page to its own site. No Supabase (free limit full, and must stay apart from Phoenix and Ellenial). Data as a JSON file in this repo. Cloudflare (Workers static assets; Cloudflare now steers new sites there instead of Pages) over a second Vercel account: separate company, no hosting access needed by Claude. Domain beercules.se.
