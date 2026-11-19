@@ -44,12 +44,13 @@ Live at https://beercules.se (Ellen checked it on her phone). DNSSEC re-enabled:
 
 ## Decisions log
 
+- 2026-11-19 07:45: Ellen: the list shows only bars with a known price of max 60 kr (bars without a price stay in the data and show under "Efterlyses"); "Högst 60 kr" checkbox removed; plain numbers instead of Roman numerals (overlapped on phones); APK explanation removed from the footer; sign-off now "Beercules Logistics" in English.
 - 2026-11-18 18:55: price column shows the real price and size (Ellen: kr/40 cl was misleading); visit counter counted at Cloudflare (D1).
 - 2026-11-18 20:45: Ellen chose live numbers on the Ongoing board through Cloudflare: connected the Cloudflare Developer Platform connector (Claude now has access to the Cloudflare account). Separate Personal panel, not in the Ellenial table. No daily copy task.
 - 2026-11-18 17:36: site live at beercules.se; DNSSEC DS record added at Loopia.
 - 2026-11-18 15:09: Ellen bought beercules.se at Loopia (MFA on), moved nameservers to Cloudflare (jerry/sasha), DNSSEC off for the move. Cloudflare DNS: no-mail records (MX ".", SPF -all, DMARC reject). AI crawler settings chosen by Ellen in Cloudflare.
 - 2026-11-18 15:13: Ellen created this private repo; GitHub passkey already on. Cloudflare's GitHub app limited to this repo only.
-- 2026-11-18 14:55: name beercules.se chosen (Ellen); "Beercules Logistik" used as the paper's sign-off.
+- 2026-11-18 14:55: name beercules.se chosen (Ellen); "Beercules Logistik" used as the paper's sign-off (English "Beercules Logistics" from 2026-11-19).
 - 2026-11-18 14:52: Cloudflare chosen over a second Vercel account (Ellen: feels safer; separate company).
 - 2026-11-18 14:44: Ellen chose her own public site: "just for fun, humans are adults and make their own decisions. This is NOT an Ellenial product." Updates mainly automated; Ellen updates only when she knows current prices.
 - 2026-11-18: moved from a Claude Sheet + claude.ai page to its own site. No Supabase (free limit full, and must stay apart from Phoenix and Ellenial). Data as a JSON file in this repo. Cloudflare (Workers static assets; Cloudflare now steers new sites there instead of Pages) over a second Vercel account: separate company, no hosting access needed by Claude. Domain beercules.se.
